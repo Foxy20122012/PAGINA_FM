@@ -7,16 +7,16 @@ const iconMap = {
   tool: <IconTool size={20} />,
 };
 
-export default function CustomNavbar({ model }) {
+export default function CustomNavbar({ model, title }) {
   return (
-    <div className="w-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-md">
+    <div className="w-full fixed top-0 left-0  bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 shadow-md">
       <nav className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* Logo */}
         <a
           href="/"
           className="text-3xl font-extrabold text-white hover:text-blue-200 transition-all duration-300"
         >
-          INEDFM
+          {title}
         </a>
 
         {/* Navbar Links */}
