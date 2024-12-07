@@ -7,7 +7,7 @@ const iconMap = {
   tool: <IconTool size={20} />,
 };
 
-export default function CustomNavbar({ model, title }) {
+export default function CustomNavbar({ model, title, logo }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
@@ -22,18 +22,18 @@ export default function CustomNavbar({ model, title }) {
         {/* Logo */}
         <a
           href="/"
-          className="text-2xl md:text-3xl font-semibold text-gray-800 hover:text-gray-600 transition-all"
+          className="text-2xl md:text-3xl font-extrabold text-gray-800 hover:text-gray-600 transition-all"
         >
-          {title}
+          {logo}
         </a>
 
         {/* Navbar Links - Desktop */}
-        <div className="hidden md:flex items-center space-x-6">
+        <div className="hidden md:flex items-center space-x-8">
           {model.map((item) => (
             <div key={item.label} className="relative group">
               <a
                 href={item.href || "#"}
-                className="flex items-center text-gray-800 hover:text-gray-600 transition-all space-x-2"
+                className="flex items-center text-gray-800 hover:text-blue-500 transition-all space-x-2 font-medium"
                 onClick={(e) => {
                   if (item.children && item.children.length > 0) {
                     toggleSubmenu(e, item.label);
@@ -44,12 +44,12 @@ export default function CustomNavbar({ model, title }) {
                 <span>{item.label}</span>
               </a>
               {item.children && item.children.length > 0 && activeSubmenu === item.label && (
-                <div className="absolute top-full left-0 mt-2 bg-white border rounded-md shadow-lg transition-all">
+                <div className="absolute top-full left-0 mt-2 bg-white border rounded-lg shadow-lg transition-all duration-300 transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
                   {item.children.map((child) => (
                     <a
                       key={child.label}
                       href={child.href}
-                      className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 hover:text-gray-600 transition-all"
+                      className="block px-6 py-2 text-sm text-gray-800 hover:bg-blue-50 hover:text-blue-600 rounded transition-all"
                     >
                       {child.label}
                     </a>
@@ -62,7 +62,7 @@ export default function CustomNavbar({ model, title }) {
 
         {/* Hamburger Menu for Mobile */}
         <button
-          className="md:hidden text-gray-800 focus:outline-none"
+          className="md:hidden text-gray-800 focus:outline-none text-xl"
           onClick={() => setIsMenuOpen((prev) => !prev)}
         >
           ☰
@@ -75,7 +75,7 @@ export default function CustomNavbar({ model, title }) {
           {model.map((item) => (
             <div key={item.label} className="px-6 py-2">
               <div
-                className="flex items-center justify-between text-gray-800 hover:text-gray-600 cursor-pointer"
+                className="flex items-center justify-between text-gray-800 hover:text-blue-600 cursor-pointer"
                 onClick={(e) => {
                   if (item.children && item.children.length > 0) {
                     toggleSubmenu(e, item.label);
@@ -84,7 +84,7 @@ export default function CustomNavbar({ model, title }) {
               >
                 <div className="flex items-center space-x-2">
                   {iconMap[item.icon]}
-                  <span>{item.label}</span>
+                  <span className="font-medium">{item.label}</span>
                 </div>
                 {item.children && item.children.length > 0 && (
                   <span>{activeSubmenu === item.label ? "▲" : "▼"}</span>
@@ -96,7 +96,7 @@ export default function CustomNavbar({ model, title }) {
                     <a
                       key={child.label}
                       href={child.href}
-                      className="block text-sm text-gray-600 hover:text-gray-800"
+                      className="block text-sm text-gray-600 hover:text-blue-600 transition-all"
                     >
                       {child.label}
                     </a>
