@@ -16,7 +16,6 @@ export const navbarModel = [
   },
   {
     label: "Services",
-    href: "/services",
     icon: "tool",
     children: [
       { label: "Web Development", href: "/services/web" },
@@ -27,7 +26,6 @@ export const navbarModel = [
   },
   {
     label: "Projects",
-    href: "/projects",
     icon: "tool",
     children: [
       { label: "Ongoing Projects", href: "/projects/ongoing" },
@@ -37,7 +35,6 @@ export const navbarModel = [
   },
   {
     label: "Blog",
-    href: "/blog",
     icon: "info-circle",
     children: [
       { label: "Latest Articles", href: "/blog/latest" },
