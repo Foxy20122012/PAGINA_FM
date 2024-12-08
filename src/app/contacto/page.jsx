@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from "react";
 
@@ -11,7 +11,7 @@ export default function ContactPage() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [feedback, setFeedback] = useState("");
+  const [modal, setModal] = useState({ show: false, type: "", message: "" });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -20,15 +20,10 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const formData = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      phone: e.target.phone.value,
-      subject: e.target.subject.value,
-      message: e.target.message.value,
-    };
-  
+
+    setIsSubmitting(true);
+    setModal({ show: false, type: "", message: "" });
+
     try {
       const response = await fetch("/api/sendMail", {
         method: "POST",
@@ -37,20 +32,43 @@ export default function ContactPage() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (!response.ok) {
         throw new Error("Error al enviar el mensaje");
       }
-  
-      const result = await response.json();
-      console.log("Respuesta del servidor:", result);
-      alert("Mensaje enviado exitosamente");
+
+      // Mostrar modal de éxito
+      setModal({
+        show: true,
+        type: "success",
+        message: "¡Tu mensaje ha sido enviado exitosamente!",
+      });
+
+      // Vaciar los campos del formulario
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
     } catch (error) {
       console.error("Error al enviar el mensaje:", error);
-      alert("Hubo un problema enviando el mensaje. Inténtalo más tarde.");
+      // Mostrar modal de error
+      setModal({
+        show: true,
+        type: "error",
+        message: "Hubo un problema enviando el mensaje. Inténtalo más tarde.",
+      });
+    } finally {
+      setIsSubmitting(false);
+
+      // Ocultar el modal automáticamente después de 5 segundos
+      setTimeout(() => {
+        setModal({ show: false, type: "", message: "" });
+      }, 5000);
     }
   };
-  
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-6 lg:px-20">
@@ -63,6 +81,22 @@ export default function ContactPage() {
         </p>
       </div>
 
+      {/* Modal */}
+      {modal.show && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+            <h2
+              className={`text-lg font-semibold mb-4 ${
+                modal.type === "success" ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {modal.type === "success" ? "¡Éxito!" : "Error"}
+            </h2>
+            <p className="text-gray-700">{modal.message}</p>
+          </div>
+        </div>
+      )}
+
       {/* Contenido principal */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
         {/* Formulario */}
@@ -70,15 +104,6 @@ export default function ContactPage() {
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
             Envíanos un mensaje
           </h2>
-          {feedback && (
-            <div
-              className={`mb-4 p-4 rounded-lg ${
-                feedback.includes("Error") ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
-              }`}
-            >
-              {feedback}
-            </div>
-          )}
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Campo: Nombre completo */}
             <div>
@@ -162,7 +187,7 @@ export default function ContactPage() {
             <div className="text-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
+                className="px-6 py-3 bg-gray-800 text-white text-lg font-medium rounded-lg shadow-md hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "Enviando..." : "Enviar mensaje"}
