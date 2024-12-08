@@ -2,12 +2,12 @@
 
 import localFont from "next/font/local";
 import CustomNavbar from "../components/navbar/CustomNavbar";
+import Footer from "../components/footer/Footer"; // Importa el Footer
 import { MantineProvider } from "@mantine/core";
 import { navbarModel } from "../models/navbar/navbarModel";
 import Image from "next/image";
 
 import "../styles/globals.css";
-import { title } from "process";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,21 +32,27 @@ export default function RootLayout({ children }) {
       />
     </div>
   );
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-         <MantineProvider
+        <MantineProvider
           withGlobalStyles
           withNormalizeCSS
           theme={{ colorScheme: "light" }} // Define un esquema de colores
         >
-        <div className="flex flex-col min-h-screen">
-          <CustomNavbar model={navbarModel} title={title} logo= {logo} />
-          <main className="flex-grow pt-16 p-6 bg-gray-50">{children}</main>
-         
-        </div>
+          <div className="flex flex-col min-h-screen">
+            {/* Navbar */}
+            <CustomNavbar model={navbarModel} title={title} logo={logo} />
+            
+            {/* Main Content */}
+            <main className="flex-grow pt-16 p-6 bg-gray-50">{children}</main>
+            
+            {/* Footer */}
+            <Footer />
+          </div>
         </MantineProvider>
       </body>
     </html>

@@ -44,4 +44,10 @@ export const navbarModel = [
     icon: "info-circle",
     children: [],
   },
+  {
+    label: "Acerca de",
+    href: "/about",
+    icon: "info-circle",
+    children: [],
+  },
 ];

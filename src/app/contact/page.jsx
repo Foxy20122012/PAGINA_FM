@@ -19,6 +19,10 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const predefinidoMensaje = encodeURIComponent(
+    "¡Hola! Me gustaría más información sobre su el establecimiento."
+  );
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -229,11 +233,12 @@ export default function ContactPage() {
 
       {/* Icono flotante de WhatsApp */}
       <a
-        href="https://wa.me/50258261532"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
-      >
+      href={`https://wa.me/50258261532?text=${predefinidoMensaje}`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="fixed bottom-8 right-8 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg flex items-center justify-center z-50"
+      aria-label="Chatea con nosotros en WhatsApp"
+    >
         <FaWhatsapp size={28} />
       </a>
     </div>
