@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { IconHome, IconInfoCircle, IconTool } from "@tabler/icons-react";
+import {
+  IconHome,
+  IconInfoCircle,
+  IconTool,
+  IconMenu2,
+  IconX,
+} from "@tabler/icons-react";
 
 const iconMap = {
-  home: <IconHome size={20} />,
-  "info-circle": <IconInfoCircle size={20} />,
-  tool: <IconTool size={20} />,
+  home: <IconHome size={24} />,
+  "info-circle": <IconInfoCircle size={24} />,
+  tool: <IconTool size={24} />,
 };
 
 export default function CustomNavbar({ model, title, logo }) {
@@ -12,13 +18,13 @@ export default function CustomNavbar({ model, title, logo }) {
   const [activeSubmenu, setActiveSubmenu] = useState(null);
 
   const toggleSubmenu = (e, label) => {
-    e.preventDefault(); // Evita recargar la página
-    setActiveSubmenu((prev) => (prev === label ? null : label)); // Abre o cierra el submenú
+    e.preventDefault();
+    setActiveSubmenu((prev) => (prev === label ? null : label));
   };
 
   return (
-    <div className="w-full fixed top-0 left-0 bg-white shadow-md border-b border-gray-200 z-50">
-      <nav className="container mx-auto flex items-center justify-between py-4 px-6">
+    <div className="w-full fixed top-0 left-0 bg-white shadow-md z-50">
+      <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-6">
         {/* Logo */}
         <a
           href="/"
@@ -28,7 +34,7 @@ export default function CustomNavbar({ model, title, logo }) {
         </a>
 
         {/* Navbar Links - Desktop */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden lg:flex items-center space-x-8">
           {model.map((item) => (
             <div key={item.label} className="relative group">
               <a
@@ -44,7 +50,7 @@ export default function CustomNavbar({ model, title, logo }) {
                 <span>{item.label}</span>
               </a>
               {item.children && item.children.length > 0 && activeSubmenu === item.label && (
-                <div className="absolute top-full left-0 mt-2 bg-white border rounded-lg shadow-lg transition-all duration-300 transform scale-95 opacity-0 group-hover:scale-100 group-hover:opacity-100">
+                <div className="absolute top-full left-0 mt-2 bg-white border rounded-lg shadow-lg transition-all duration-300">
                   {item.children.map((child) => (
                     <a
                       key={child.label}
@@ -62,20 +68,28 @@ export default function CustomNavbar({ model, title, logo }) {
 
         {/* Hamburger Menu for Mobile */}
         <button
-          className="md:hidden text-gray-800 focus:outline-none text-xl"
+          className="lg:hidden text-gray-800 focus:outline-none text-2xl"
           onClick={() => setIsMenuOpen((prev) => !prev)}
         >
-          ☰
+          {isMenuOpen ? <IconX size={28} /> : <IconMenu2 size={28} />}
         </button>
       </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile and Tablet Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200 shadow-md">
+        <div className="fixed inset-0 bg-white z-50 flex flex-col p-6">
+          {/* Close Button */}
+          <button
+            className="text-gray-800 text-3xl self-end mb-4"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <IconX size={28} />
+          </button>
+
           {model.map((item) => (
-            <div key={item.label} className="px-6 py-2">
+            <div key={item.label} className="mb-4">
               <div
-                className="flex items-center justify-between text-gray-800 hover:text-blue-600 cursor-pointer"
+                className="flex items-center justify-between text-gray-800 text-xl font-semibold cursor-pointer hover:text-blue-500"
                 onClick={(e) => {
                   if (item.children && item.children.length > 0) {
                     toggleSubmenu(e, item.label);
@@ -84,19 +98,19 @@ export default function CustomNavbar({ model, title, logo }) {
               >
                 <div className="flex items-center space-x-2">
                   {iconMap[item.icon]}
-                  <span className="font-medium">{item.label}</span>
+                  <span>{item.label}</span>
                 </div>
-                {item.children && item.children.length > 0 && (
+                {item.children && (
                   <span>{activeSubmenu === item.label ? "▲" : "▼"}</span>
                 )}
               </div>
               {item.children && item.children.length > 0 && activeSubmenu === item.label && (
-                <div className="mt-2 pl-4 space-y-1">
+                <div className="mt-2 ml-6 space-y-2">
                   {item.children.map((child) => (
                     <a
                       key={child.label}
                       href={child.href}
-                      className="block text-sm text-gray-600 hover:text-blue-600 transition-all"
+                      className="block text-lg text-gray-600 hover:text-blue-500"
                     >
                       {child.label}
                     </a>

@@ -24,7 +24,7 @@ export default function HomePage() {
             Explorar más
           </a>
           <a
-            href="/contacto"
+            href="/contact"
             className="px-6 py-3 border-2 border-gray-800 text-gray-800 text-lg rounded-full shadow-md hover:bg-gray-800 hover:text-white hover:shadow-lg transition-all duration-300"
           >
             Contáctanos
