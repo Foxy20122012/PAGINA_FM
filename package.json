@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.2",
     "@mantine/charts": "^7.14.1",
     "@mantine/core": "^7.14.1",
     "@mantine/dates": "^7.14.1",
@@ -16,6 +17,8 @@
     "@mantine/hooks": "^7.14.1",
     "@mantine/notifications": "^7.14.1",
     "@tabler/icons-react": "^3.22.0",
+    "antd": "^5.22.3",
+    "axios": "^1.7.9",
     "dotenv": "^16.4.7",
     "next": "^15.0.3",
     "nodemailer": "^6.9.16",
