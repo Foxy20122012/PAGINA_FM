@@ -3,52 +3,51 @@ export const navbarModel = [
     label: "Home",
     href: "/",
     icon: "home",
-    children: [], // No tiene hijos
+    children: [],
   },
   {
-    label: "About",
-    href: "/about",
+    label: "Actividades y Eventos",
+    href: "/actividades-eventos",
     icon: "info-circle",
     children: [
-      { label: "Our Team", href: "/about/team" },
-      { label: "Our History", href: "/about/history" },
+      { label: "Eventos Pasados", href: "/actividades-eventos/pasados" },
+      { label: "Próximos Eventos", href: "/actividades-eventos/proximos" },
     ],
   },
   {
-    label: "Services",
-    href: "/services",
-    icon: "tool",
-    children: [
-      { label: "Web Development", href: "/services/web" },
-      { label: "Mobile Development", href: "/services/mobile" },
-      { label: "UI/UX Design", href: "/services/design" },
-      { label: "SEO Optimization", href: "/services/seo" },
-    ],
-  },
-  {
-    label: "Projects",
-    href: "/projects",
-    icon: "tool",
-    children: [
-      { label: "Ongoing Projects", href: "/projects/ongoing" },
-      { label: "Completed Projects", href: "/projects/completed" },
-      { label: "Case Studies", href: "/projects/case-studies" },
-    ],
-  },
-  {
-    label: "Blog",
-    href: "/blog",
+    label: "Procesos de Inscripción",
+    href: "/procesos-inscripcion",
     icon: "info-circle",
     children: [
-      { label: "Latest Articles", href: "/blog/latest" },
-      { label: "Technology Trends", href: "/blog/tech" },
-      { label: "How-To Guides", href: "/blog/guides" },
+      { label: "Requisitos", href: "/procesos-inscripcion/requisitos" },
+      { label: "Fechas Importantes", href: "/procesos-inscripcion/fechas" },
     ],
   },
   {
-    label: "Contact",
+    label: "Pensum Académico",
+    href: "/pensum-academico",
+    icon: "info-circle",
+    children: [],
+  },
+  {
+    label: "Galería de Eventos",
+    href: "/galeria-eventos",
+    icon: "info-circle",
+    children: [
+      { label: "Fotos", href: "/galeria-eventos/fotos" },
+      { label: "Videos", href: "/galeria-eventos/videos" },
+    ],
+  },
+  {
+    label: "Contacto",
     href: "/contact",
     icon: "info-circle",
-    children: [], // No tiene hijos
+    children: [],
+  },
+  {
+    label: "Acerca de",
+    href: "/about",
+    icon: "info-circle",
+    children: [],
   },
 ];
