@@ -10,8 +10,9 @@ export const navbarModel = [
     href: "/actividades-eventos",
     icon: "info-circle",
     children: [
-      { label: "Eventos Pasados", href: "/actividades-eventos/pasados" },
-      { label: "Próximos Eventos", href: "/actividades-eventos/proximos" },
+      { label: "Eventos", href: "/views/viewEvents" },
+      { label: "Post", href: "/views/viewNews" },
+      { label: "Noticias", href: "/views/viewPost" },
     ],
   },
   {
