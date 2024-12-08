@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from "react";
+import { FaWhatsapp } from "react-icons/fa"; // Instala react-icons si no lo tienes: npm install react-icons
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -71,7 +72,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-6 lg:px-20">
+    <div className="min-h-screen bg-gray-50 py-12 px-6 lg:px-20 relative">
       {/* Encabezado */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-extrabold text-gray-800">Contáctanos</h1>
@@ -225,6 +226,16 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
+
+      {/* Icono flotante de WhatsApp */}
+      <a
+        href="https://wa.me/50258261532"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition duration-300"
+      >
+        <FaWhatsapp size={28} />
+      </a>
     </div>
   );
 }
