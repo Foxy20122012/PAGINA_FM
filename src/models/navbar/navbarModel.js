@@ -9,9 +9,9 @@ export const navbarModel = [
     label: "Actividades y Eventos",
     icon: "info-circle",
     children: [
-      { label: "Noticias", href: "/views/viewPost" },   
+      { label: "Posts", href: "/views/viewPost" },   
       { label: "Eventos", href: "/views/viewEvents" },
-      { label: "Post", href: "/views/viewNews" },
+      { label: "Noticias", href: "/views/viewNews" },
     ],
   },
   {
@@ -34,6 +34,18 @@ export const navbarModel = [
     href: "/professor",
     children: [],
   },
+  {
+    label: "Historia",
+    icon: "info-circle",
+    href: "/history",
+    children: [],
+  },  
+  {
+    label: "Preguntas Frecuentes",
+    icon: "info-circle",
+    href: "/faq",
+    children: [],
+  },  
   {
     label: "Contacto",
     href: "/contact",
