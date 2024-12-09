@@ -36,8 +36,14 @@ const CoursesPage = () => {
   const cardColors = ['#FFFAF0', '#F0F4FF', '#E6F7F3', '#FFF4E6', '#FBEFF0']; // Paleta de colores
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Explora los Cursos Disponibles</h1>
+    <div className="p-6 bg-gray-50 min-h-screen py-12">
+  <h1 className="text-4xl font-bold text-center text-gray-800 mb-4">Explora los Cursos Disponibles</h1>
+  <p className="text-lg text-gray-700 text-center mb-8 max-w-3xl mx-auto">
+    Bienvenido a la sección de cursos, donde podrás encontrar una variedad de opciones educativas diseñadas para ampliar tus conocimientos y habilidades. 
+    Cada curso incluye detalles sobre su contenido, temas relevantes y publicaciones asociadas que enriquecen el aprendizaje. 
+    ¡Descubre el curso ideal para ti y obtén toda la información necesaria para iniciar tu camino educativo!
+  </p>
+
       <Row gutter={[24, 24]}>
         {courses.map((course, index) => (
           <Col key={course.id} xs={24} sm={12} md={8} lg={6}>

@@ -24,11 +24,9 @@ export const navbarModel = [
   },
   {
     label: "Pensum Académico",
+    href: "/courses" ,
     icon: "info-circle",
-    children: [
-      { label: "Cursos", href: "/courses" },
-      { label: "Temas", href: "/temas" },
-    ],
+    children: [],
   },
   {
     label: "Catedraticos",
