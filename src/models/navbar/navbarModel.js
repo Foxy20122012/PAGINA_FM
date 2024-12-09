@@ -31,6 +31,7 @@ export const navbarModel = [
   {
     label: "Catedraticos",
     icon: "info-circle",
+    href: "/professor",
     children: [],
   },
   {
