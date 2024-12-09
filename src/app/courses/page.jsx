@@ -55,10 +55,7 @@ const CoursesPage = () => {
               }
             >
               <p className="text-sm text-gray-700 mb-4">
-                <strong>Descripción:</strong>{' '}
-                {course.descripcion
-                  ? `${course.descripcion.split(' ').slice(0, 20).join(' ')}...`
-                  : 'Sin descripción.'}
+                <strong>Descripción:</strong> Haz clic en "Ver detalles" para más información.
               </p>
               <Button
                 type="primary"
@@ -75,37 +72,66 @@ const CoursesPage = () => {
 
       {selectedCourse && (
         <Modal
-          title={selectedCourse.nombre}
-          visible={isModalVisible}
-          onCancel={closeModal}
-          footer={null}
-          centered
-        >
-          <h3 className="text-lg font-bold">Temas:</h3>
-          <ul className="list-disc pl-5 mb-4">
-            {selectedCourse.temas && selectedCourse.temas.length > 0 ? (
-              selectedCourse.temas.map((tema) => (
-                <li key={tema.id} className="text-sm text-gray-700">
-                  {tema.nombre}
-                </li>
-              ))
-            ) : (
-              <p className="text-sm text-gray-500">No hay temas asociados.</p>
-            )}
-          </ul>
-          <h3 className="text-lg font-bold">Posts:</h3>
-          <ul className="list-disc pl-5">
-            {selectedCourse.posts && selectedCourse.posts.length > 0 ? (
-              selectedCourse.posts.map((post) => (
-                <li key={post.id} className="text-sm text-gray-700">
-                  {post.titulo}
-                </li>
-              ))
-            ) : (
-              <p className="text-sm text-gray-500">No hay posts asociados.</p>
-            )}
-          </ul>
-        </Modal>
+  title={<span className="text-xl font-semibold">{selectedCourse.nombre}</span>}
+  visible={isModalVisible}
+  onCancel={closeModal}
+  footer={null}
+  centered
+  bodyStyle={{
+    maxHeight: '80vh',
+    overflowY: 'auto',
+    padding: '20px',
+    backgroundColor: '#f9f9f9',
+    borderRadius: '10px',
+  }}
+>
+  <div className="mb-6">
+    <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+      📘 Descripción:
+    </h3>
+    <p className="text-sm text-gray-700">{selectedCourse.descripcion}</p>
+  </div>
+
+  <div className="mb-6">
+    <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+      📚 Temas:
+    </h3>
+    {selectedCourse.temas && selectedCourse.temas.length > 0 ? (
+      <ul className="list-disc pl-5">
+        {selectedCourse.temas.map((tema) => (
+          <li key={tema.id} className="text-sm text-gray-700">
+            {tema.nombre}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-sm text-gray-500">No hay temas asociados.</p>
+    )}
+  </div>
+
+  <div>
+    <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+      📰 Posts:
+    </h3>
+    {selectedCourse.posts && selectedCourse.posts.length > 0 ? (
+      <div className="grid grid-cols-2 gap-4">
+        {selectedCourse.posts.map((post) => (
+          <div
+            key={post.id}
+            className="p-2 bg-gray-100 rounded-lg shadow-sm hover:shadow-md transition-all duration-200"
+          >
+            <h4 className="text-sm font-semibold text-gray-800">{post.titulo}</h4>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p className="text-sm text-gray-500">No hay posts asociados.</p>
+    )}
+  </div>
+</Modal>
+
+
+      
       )}
     </div>
   );
