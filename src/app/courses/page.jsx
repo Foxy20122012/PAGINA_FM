@@ -1,16 +1,16 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { Card, Row, Col, Button, Modal } from 'antd';
 import { EyeOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get('https://apiumgcollab.onrender.com/api/cursos');
@@ -23,43 +23,50 @@ const CoursesPage = () => {
     fetchCourses();
   }, []);
 
-  const handleOpenModal = (course) => {
+  const openModal = (course) => {
     setSelectedCourse(course);
-    setIsModalOpen(true);
+    setIsModalVisible(true);
   };
 
-  const handleCloseModal = () => {
+  const closeModal = () => {
     setSelectedCourse(null);
-    setIsModalOpen(false);
+    setIsModalVisible(false);
   };
+
+  const cardColors = ['#FFFAF0', '#F0F4FF', '#E6F7F3', '#FFF4E6', '#FBEFF0']; // Paleta de colores
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Cursos Disponibles</h1>
-      <p className="text-lg text-gray-600 text-center mb-6">
-        Explora los cursos disponibles en nuestra plataforma.
-      </p>
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Explora los Cursos Disponibles</h1>
       <Row gutter={[24, 24]}>
-        {courses.map((course) => (
+        {courses.map((course, index) => (
           <Col key={course.id} xs={24} sm={12} md={8} lg={6}>
             <Card
-              className="hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 rounded-xl overflow-hidden border border-gray-200"
-              title={course.nombre}
-              hoverable
+              style={{
+                backgroundColor: cardColors[index % cardColors.length],
+                borderRadius: '10px',
+                border: '1px solid #ddd',
+              }}
+              className="shadow-md hover:shadow-lg transition-shadow"
+              title={
+                <h3 className="text-xl font-bold text-gray-800">
+                  {course.nombre}
+                </h3>
+              }
             >
-              <p className="text-sm text-gray-600 mb-3">
+              <p className="text-sm text-gray-700 mb-4">
                 <strong>Descripción:</strong>{' '}
-                {course.descripcion?.length > 100
-                  ? `${course.descripcion.substring(0, 100)}...`
-                  : course.descripcion}
+                {course.descripcion
+                  ? `${course.descripcion.split(' ').slice(0, 20).join(' ')}...`
+                  : 'Sin descripción.'}
               </p>
               <Button
                 type="primary"
                 icon={<EyeOutlined />}
-                onClick={() => handleOpenModal(course)}
-                className="bg-blue-500 hover:bg-blue-600 text-white"
+                onClick={() => openModal(course)}
+                className="bg-gray-800 hover:bg-gray-900"
               >
-                Ver más
+                Ver detalles
               </Button>
             </Card>
           </Col>
@@ -69,26 +76,35 @@ const CoursesPage = () => {
       {selectedCourse && (
         <Modal
           title={selectedCourse.nombre}
-          open={isModalOpen}
-          onCancel={handleCloseModal}
+          visible={isModalVisible}
+          onCancel={closeModal}
           footer={null}
           centered
         >
-          <p className="text-gray-600 mb-4">
-            <strong>Descripción:</strong> {selectedCourse.descripcion}
-          </p>
-          <p className="text-gray-600 mb-4">
-            <strong>Temas:</strong>{' '}
-            {selectedCourse.temas && selectedCourse.temas.length > 0
-              ? selectedCourse.temas.map((tema) => tema.nombre).join(', ')
-              : 'No hay temas asociados'}
-          </p>
-          <p className="text-gray-600">
-            <strong>Posts asociados:</strong>{' '}
-            {selectedCourse.posts && selectedCourse.posts.length > 0
-              ? selectedCourse.posts.map((post) => post.titulo).join(', ')
-              : 'No hay posts asociados'}
-          </p>
+          <h3 className="text-lg font-bold">Temas:</h3>
+          <ul className="list-disc pl-5 mb-4">
+            {selectedCourse.temas && selectedCourse.temas.length > 0 ? (
+              selectedCourse.temas.map((tema) => (
+                <li key={tema.id} className="text-sm text-gray-700">
+                  {tema.nombre}
+                </li>
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No hay temas asociados.</p>
+            )}
+          </ul>
+          <h3 className="text-lg font-bold">Posts:</h3>
+          <ul className="list-disc pl-5">
+            {selectedCourse.posts && selectedCourse.posts.length > 0 ? (
+              selectedCourse.posts.map((post) => (
+                <li key={post.id} className="text-sm text-gray-700">
+                  {post.titulo}
+                </li>
+              ))
+            ) : (
+              <p className="text-sm text-gray-500">No hay posts asociados.</p>
+            )}
+          </ul>
         </Modal>
       )}
     </div>
