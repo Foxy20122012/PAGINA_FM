@@ -41,6 +41,7 @@ export default function HomePage() {
           </Card>
         ))}
       </div>
+      <div className="mt-14"></div>
     </div>
   );
 }

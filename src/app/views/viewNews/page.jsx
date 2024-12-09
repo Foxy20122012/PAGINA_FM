@@ -1,51 +1,63 @@
-// src/app/admin/views/viewPost/page.jsx
+// src/app/admin/views/viewNews/page.jsx
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Tag, Tooltip } from 'antd';
+import { Card, Row, Col, Tag, Tooltip, Typography } from 'antd';
 import { useRouter } from 'next/navigation';
 import approvedNewsService from '../../../services/byteService/posts/approved/newsApprovedService';
-//import approvedNewsService from '../../../../services/umgService/collabAdmin/posts/approved/newsApprovedService';
 import { CalendarOutlined, EnvironmentOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons';
 
-const ViewPostsPage = () => {
-  const [posts, setPosts] = useState([]);
+const { Title, Paragraph } = Typography;
+
+const ViewNewsPage = () => {
+  const [news, setNews] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchApprovedPosts = async () => {
+    const fetchApprovedNews = async () => {
       try {
         const service = new approvedNewsService();
         const response = await service.getPostsApproved();
-        setPosts(response.data); // setState dentro de useEffect
+        setNews(response.data); // setState dentro de useEffect
       } catch (error) {
-        console.error('Error fetching approved posts:', error);
+        console.error('Error fetching approved news:', error);
       }
     };
-  
-    fetchApprovedPosts();
+
+    fetchApprovedNews();
   }, []); // dependencies pueden estar vacías si solo deseas que se ejecute al montar
-  
 
   const handleCardClick = (id) => {
     router.push(`/views/viewNews/${id}`);
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen py-10">
+      {/* Introducción a las noticias relevantes */}
+      <div className="mb-8 text-center">
+        <Title level={2} className="text-blue-800 font-extrabold">
+          Noticias Relevantes del Instituto
+        </Title>
+        <Paragraph className="text-gray-600 text-lg">
+          Mantente al día con las últimas noticias y eventos destacados de nuestra comunidad educativa. 
+          Haz clic en cualquier noticia para leer más detalles y mantenerte informado sobre nuestras actividades.
+        </Paragraph>
+      </div>
+
+      {/* Sección de tarjetas */}
       <Row gutter={[24, 24]}>
-        {posts.map((post) => (
-          <Col key={post.id} xs={24} sm={12} md={8} lg={6}>
+        {news.map((item) => (
+          <Col key={item.id} xs={24} sm={12} md={8} lg={6}>
             <Card
               className="hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 rounded-xl overflow-hidden border border-gray-200"
               hoverable
-              onClick={() => handleCardClick(post.id)}
+              onClick={() => handleCardClick(item.id)}
               cover={
                 <div
                   className={`h-52 rounded-t-xl`}
                   style={{
-                    backgroundImage: post.imagenes && post.imagenes.length > 0
-                      ? `url(${post.imagenes[0].url})`
+                    backgroundImage: item.imagenes?.length
+                      ? `url(${item.imagenes[0].url})`
                       : 'linear-gradient(to right, #4f46e5, #3b82f6)',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
@@ -54,38 +66,39 @@ const ViewPostsPage = () => {
               }
             >
               <div className="p-4">
-                <h3 className="text-xl font-bold text-gray-800 mb-3 truncate">
-                  {post.titulo}
+                <h3 className="text-lg font-bold text-gray-800 mb-2 truncate">
+                  {item.titulo}
                 </h3>
-                <p className="text-sm text-gray-600 mb-3 leading-relaxed">
-                  <strong>Contenido:</strong> {post.contenido.length > 70 ? `${post.contenido.substring(0, 70)}...` : post.contenido}
+                <p className="text-sm text-gray-600 mb-2 leading-relaxed">
+                  <strong>Resumen:</strong>{' '}
+                  {item.contenido.length > 60 ? `${item.contenido.substring(0, 60)}...` : item.contenido}
                 </p>
-                <div className="flex items-center mb-3">
+                <div className="flex items-center mb-2">
                   <strong className="mr-1">Estado:</strong>
-                  {post.estado === 'aprobado' ? (
-                    <Tag color="green" className="rounded-md">
+                  {item.estado === 'aprobado' ? (
+                    <Tag color="green" className="rounded-md text-sm">
                       <CheckCircleOutlined /> Aprobado
                     </Tag>
                   ) : (
-                    <Tag color="orange" className="rounded-md">
+                    <Tag color="orange" className="rounded-md text-sm">
                       <ClockCircleOutlined /> Pendiente
                     </Tag>
                   )}
                 </div>
-                <Tooltip title="Fecha del evento">
-                  <p className="text-gray-600 flex items-center mb-2">
+                <Tooltip title="Fecha de publicación">
+                  <p className="text-gray-600 flex items-center mb-1">
                     <CalendarOutlined className="mr-1" />
-                    {new Date(post.fecha_actualizacion).toLocaleDateString('es-ES', {
+                    {new Date(item.fecha_actualizacion).toLocaleDateString('es-ES', {
                       year: 'numeric',
-                      month: 'long',
+                      month: 'short',
                       day: 'numeric',
                     })}
                   </p>
                 </Tooltip>
-                <Tooltip title="Tipo de contenido">
+                <Tooltip title="Categoría de la noticia">
                   <p className="text-gray-600 flex items-center">
                     <EnvironmentOutlined className="mr-1" />
-                    {post.tipo_contenido}
+                    {item.tipo_contenido || 'General'}
                   </p>
                 </Tooltip>
               </div>
@@ -97,4 +110,4 @@ const ViewPostsPage = () => {
   );
 };
 
-export default ViewPostsPage;
+export default ViewNewsPage;

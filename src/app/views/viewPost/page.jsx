@@ -2,10 +2,12 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Tag, Tooltip } from 'antd';
+import { Card, Row, Col, Tag, Tooltip, Typography } from 'antd';
 import { useRouter } from 'next/navigation';
 import approvedPostsService from '../../../services/byteService/posts/approved/postsApprovedService';
 import { CalendarOutlined, EnvironmentOutlined, CheckCircleOutlined, ClockCircleOutlined } from '@ant-design/icons';
+
+const { Title, Paragraph } = Typography;
 
 const ViewPostsPage = () => {
   const [posts, setPosts] = useState([]);
@@ -30,7 +32,20 @@ const ViewPostsPage = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 bg-gray-50 min-h-screen py-10">
+      {/* Introducción a los posts */}
+      <div className="mb-8 text-center">
+        <Title level={2} className="text-blue-800 font-extrabold">
+          Publicaciones Aprobadas
+        </Title>
+        <Paragraph className="text-gray-600 text-lg">
+          Aquí encontrarás las publicaciones más recientes de nuestra comunidad. 
+          Explora los posts aprobados y descubre el contenido destacado. 
+          Haz clic en una tarjeta para ver más detalles.
+        </Paragraph>
+      </div>
+
+      {/* Sección de tarjetas */}
       <Row gutter={[24, 24]}>
         {posts.map((post) => (
           <Col key={post.id} xs={24} sm={12} md={8} lg={6}>
@@ -42,7 +57,7 @@ const ViewPostsPage = () => {
                 <div
                   className={`h-52 rounded-t-xl`}
                   style={{
-                    backgroundImage: post.imagenes && post.imagenes.length > 0
+                    backgroundImage: post.imagenes?.length
                       ? `url(${post.imagenes[0].url})`
                       : 'linear-gradient(to right, #4f46e5, #3b82f6)',
                     backgroundSize: 'cover',
@@ -52,38 +67,39 @@ const ViewPostsPage = () => {
               }
             >
               <div className="p-4">
-                <h3 className="text-xl font-bold text-gray-800 mb-3 truncate">
+                <h3 className="text-lg font-bold text-gray-800 mb-2 truncate">
                   {post.titulo}
                 </h3>
-                <p className="text-sm text-gray-600 mb-3 leading-relaxed">
-                  <strong>Contenido:</strong> {post.contenido.length > 70 ? `${post.contenido.substring(0, 70)}...` : post.contenido}
+                <p className="text-sm text-gray-600 mb-2 leading-relaxed">
+                  <strong>Descripción:</strong>{' '}
+                  {post.contenido.length > 60 ? `${post.contenido.substring(0, 60)}...` : post.contenido}
                 </p>
-                <div className="flex items-center mb-3">
+                <div className="flex items-center mb-2">
                   <strong className="mr-1">Estado:</strong>
                   {post.estado === 'aprobado' ? (
-                    <Tag color="green" className="rounded-md">
+                    <Tag color="green" className="rounded-md text-sm">
                       <CheckCircleOutlined /> Aprobado
                     </Tag>
                   ) : (
-                    <Tag color="orange" className="rounded-md">
+                    <Tag color="orange" className="rounded-md text-sm">
                       <ClockCircleOutlined /> Pendiente
                     </Tag>
                   )}
                 </div>
-                <Tooltip title="Fecha del evento">
-                  <p className="text-gray-600 flex items-center mb-2">
+                <Tooltip title="Fecha de creación">
+                  <p className="text-gray-600 flex items-center mb-1">
                     <CalendarOutlined className="mr-1" />
                     {new Date(post.fecha_actualizacion).toLocaleDateString('es-ES', {
                       year: 'numeric',
-                      month: 'long',
+                      month: 'short',
                       day: 'numeric',
                     })}
                   </p>
                 </Tooltip>
-                <Tooltip title="Tipo de contenido">
+                <Tooltip title="Categoría del post">
                   <p className="text-gray-600 flex items-center">
                     <EnvironmentOutlined className="mr-1" />
-                    {post.tipo_contenido}
+                    {post.tipo_contenido || 'General'}
                   </p>
                 </Tooltip>
               </div>

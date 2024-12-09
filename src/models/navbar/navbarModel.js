@@ -7,37 +7,33 @@ export const navbarModel = [
   },
   {
     label: "Actividades y Eventos",
-    href: "/actividades-eventos",
     icon: "info-circle",
     children: [
+      { label: "Noticias", href: "/views/viewPost" },   
       { label: "Eventos", href: "/views/viewEvents" },
       { label: "Post", href: "/views/viewNews" },
-      { label: "Noticias", href: "/views/viewPost" },
     ],
   },
   {
     label: "Procesos de Inscripción",
-    href: "/procesos-inscripcion",
     icon: "info-circle",
     children: [
-      { label: "Requisitos", href: "/procesos-inscripcion/requisitos" },
-      { label: "Fechas Importantes", href: "/procesos-inscripcion/fechas" },
+      { label: "Requisitos", href: "/registration/requirements" },
+      { label: "Fechas Importantes", href: "/registration/importantDate" },
     ],
   },
   {
     label: "Pensum Académico",
-    href: "/pensum-academico",
-    icon: "info-circle",
-    children: [],
-  },
-  {
-    label: "Galería de Eventos",
-    href: "/galeria-eventos",
     icon: "info-circle",
     children: [
-      { label: "Fotos", href: "/galeria-eventos/fotos" },
-      { label: "Videos", href: "/galeria-eventos/videos" },
+      { label: "Cursos", href: "/courses" },
+      { label: "Temas", href: "/temas" },
     ],
+  },
+  {
+    label: "Catedraticos",
+    icon: "info-circle",
+    children: [],
   },
   {
     label: "Contacto",

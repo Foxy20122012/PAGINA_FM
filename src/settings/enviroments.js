@@ -10,8 +10,12 @@ module.exports = {
             endpoint: {
                 admin: {
                     cursos: {
-                        cursos: '/api/Cursos',
-                        temas: '/api/topics'
+                        cursos: '/api/cursos',
+                        temas: '/api/topics',
+                        cursosExcelId: '/api/Cursos/${id}/excel', // Generar excel de un curso
+                        cursosExcel: '/api/cursosExcel', // Generar excel de todos los cursos
+                        cursosPdf: '/api/cursosPdf', // Generar pdf de todos los cursos
+                        cursosPdfId: '/api/cursos/${id}/pdf', // Generar pdf de un curso
                     },
                     registerProfessors:{
                         registroProcesor: '/api/usuarios/catedraticos'
